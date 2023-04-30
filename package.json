@@ -14,7 +14,8 @@
     "socket.io-client": "^4.6.1"
   },
   "scripts": {
-    "start": "rm -rf dist & parcel build & node server/server.js",
+    "start": "node server/server.js",
+    "build": "rm -rf dist && parcel build",
     "run": "nodemon -w server server/server.js",
     "watch": "parcel watch"
   },
