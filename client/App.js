@@ -20,6 +20,7 @@ export function App () {
   useEffect(() => {
     socket = io()
     socket.on('magnets', setMagnets)
+    window.add = magnet => socket.emit('add', magnet)
     return () => {
       socket.disconnect()
     }

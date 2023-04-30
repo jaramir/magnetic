@@ -2,7 +2,7 @@ const Koa = require('koa')
 const http = require('http')
 const socket = require('socket.io')
 const static = require('koa-static')
-const {getMagnets, setMagnet} = require('./magnets')
+const {getMagnets, setMagnet, addMagnet} = require('./magnets')
 
 const app = new Koa()
 app.use(static("./dist", {}))
@@ -16,6 +16,11 @@ io.on('connection', socket => {
   socket.on('magnet', data => {
     setMagnet(data)
     socket.broadcast.emit('magnets', getMagnets())
+  })
+
+  socket.on('add', magnet => {
+    addMagnet(magnet)
+    io.emit('magnets', getMagnets())
   })
 })
 

@@ -1,14 +1,27 @@
-const {map, when, propEq, evolve} = require('ramda')
+'use strict';
 
-let magnets = [
-  {id: 1, top: 200, left: 160, content: 'vita'},
-  {id: 2, top: 203, left: 200, content: 'felicitá'},
-  {id: 3, top: 199, left: 260, content: 'momenti'}
-]
+const {map, when, propEq, evolve} = require('ramda')
+const {readFileSync, writeFile} = require('fs')
+
+const storage = 'magnets.json'
+let magnets = JSON.parse(readFileSync(storage))
 
 const isInteger = value => Number.isInteger(value)
 
+function store () {
+  writeFile(storage, JSON.stringify(magnets, null, 2), () => {})
+}
+
 module.exports = {
+  addMagnet: magnet => {
+    magnets.push({
+      id: magnets.length + 1,
+      top: Math.trunc(Math.random() * 500),
+      left: Math.trunc(Math.random() * 500),
+      content: magnet
+    })
+    store()
+  },
   getMagnets: () => magnets,
   setMagnet: data => {
     if (isInteger(data.id) && isInteger(data.top) && isInteger(data.left)) {
@@ -20,6 +33,7 @@ module.exports = {
             left: () => data.left
           })
         ), magnets)
+      store()
     }
   }
 }
