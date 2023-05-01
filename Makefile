@@ -1,4 +1,5 @@
 deploy:
+	yarn build
 	rsync -avz --delete ./dist/ magnetic.slack.it:~/magnetic/dist
 	rsync -avz --delete ./server/ magnetic.slack.it:~/magnetic/server
 	rsync -avz ./package.json magnetic.slack.it:~/magnetic/package.json
