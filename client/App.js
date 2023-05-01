@@ -31,6 +31,8 @@ export function App () {
     socket.on('magnets', setMagnets)
     window.add = magnet => socket.emit('add', magnet)
     return () => {
+      socket.off('magnet', mergeMagnet)
+      socket.off('magnets', setMagnets)
       socket.disconnect()
     }
   }, [])
