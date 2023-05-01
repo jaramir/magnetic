@@ -13,6 +13,7 @@ function store () {
 }
 
 module.exports = {
+  getMagnets: () => magnets,
   addMagnet: magnet => {
     magnets.push({
       id: magnets.length + 1,
@@ -22,7 +23,6 @@ module.exports = {
     })
     store()
   },
-  getMagnets: () => magnets,
   setMagnet: data => {
     if (isInteger(data.id) && isInteger(data.top) && isInteger(data.left)) {
       magnets = map(
@@ -34,6 +34,9 @@ module.exports = {
           })
         ), magnets)
       store()
+      return true;
+    } else {
+      return false;
     }
   }
 }

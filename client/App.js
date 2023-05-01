@@ -17,8 +17,17 @@ const limit = move => ({
 export function App () {
   const [magnets, setMagnets] = useState([])
 
+  const mergeMagnet = magnet => {
+    setMagnets(map(when(propEq(magnet.id, 'id'),
+      evolve({
+        top: () => magnet.top,
+        left: () => magnet.left
+      }))))
+  }
+
   useEffect(() => {
     socket = io()
+    socket.on('magnet', mergeMagnet)
     socket.on('magnets', setMagnets)
     window.add = magnet => socket.emit('add', magnet)
     return () => {
@@ -28,11 +37,7 @@ export function App () {
 
   const onMove = move => {
     const limitedMove = limit(move)
-    setMagnets(map(when(propEq(move.id, 'id'),
-      evolve({
-        top: () => limitedMove.top,
-        left: () => limitedMove.left
-      }))))
+    mergeMagnet(limitedMove)
     socket.emit('magnet', limitedMove)
   }
 

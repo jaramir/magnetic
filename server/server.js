@@ -14,8 +14,7 @@ io.on('connection', socket => {
   socket.emit('magnets', getMagnets())
 
   socket.on('magnet', data => {
-    setMagnet(data)
-    socket.broadcast.emit('magnets', getMagnets())
+    setMagnet(data) && socket.broadcast.emit('magnet', data)
   })
 
   socket.on('add', magnet => {
