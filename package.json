@@ -5,7 +5,7 @@
   "dependencies": {
     "koa": "^2.14.2",
     "koa-static": "^5.0.0",
-    "ramda": "^0.29.0",
+    "ramda": "^0.29.1",
     "socket.io": "^4.6.1"
   },
   "scripts": {
